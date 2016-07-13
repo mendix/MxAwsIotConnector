@@ -14,13 +14,13 @@ import com.mendix.systemwideinterfaces.core.IContext;
 public class Microflows
 {
 	// These are the microflows for the TestMxAwsIoT module
-	public static void onMessageMicroflow(IContext context, String _topic, String _payload)
+	public static void onMessageMicroflow(IContext context, String _payload, String _topic)
 	{
 		try
 		{
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("Topic", _topic);
 			params.put("Payload", _payload);
+			params.put("Topic", _topic);
 			Core.execute(context, "TestMxAwsIoT.OnMessageMicroflow", params);
 		}
 		catch (CoreException e)

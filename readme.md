@@ -8,10 +8,12 @@ the parameter values again.
 
 ## Usage
 
-The connector consists of types of actions:
+The connector consists of types of microflow actions:
 * Actions to determine the devices connected to AWS IoT.
-* Acrions to get and set the shadow of devices connected to AWS IoT through the REST Api.
+* Actions to get and set the shadow of devices connected to AWS IoT through the REST Api.
 * Actions to get and set the shadow of devices connected to AWS IoT through MQTT messages.
+
+ ![Mendix AWS IoT toolbox actions][16]
 
 ### Configuration
 
@@ -118,3 +120,4 @@ This connector is licensed under the Apache v2 license.
  [13]: https://github.com/awslabs/aws-iot-demo-for-danbo
  [14]: http://www.javaquery.com/2016/01/aws-version-4-signing-process-complete.html
  [15]: https://github.com/mendix/MxAwsIotConnector
+ [16]: docs/images/mx-aws-iot-toolbox.png
