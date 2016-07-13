@@ -80,7 +80,7 @@ Configuration of this action also needs the certificates provided by AWS IoT:
 
 ## Development
 
-Development of this connector is done through a git project on Github.
+The sourcecode of this connector is on Github: [Github AWS IoT connector][15].
 
 All java jar dependencies are managed using an ivy file. You can download all dependencies by running runivy.cmd. This will save all jars in the userlib folder. There are two different scripts to run ivy:
 
@@ -117,3 +117,4 @@ This connector is licensed under the Apache v2 license.
  [12]: docs/images/subscribe-mqtt-topic-configuration.png
  [13]: https://github.com/awslabs/aws-iot-demo-for-danbo
  [14]: http://www.javaquery.com/2016/01/aws-version-4-signing-process-complete.html
+ [15]: https://github.com/mendix/MxAwsIotConnector
