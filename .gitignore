@@ -1,0 +1,15 @@
+*.iml
+.idea
+.mendix-cache
+.deployment
+out
+userlib2
+userlib
+target
+*.bak
+*.lock
+certs
+releases
+*.swp
+deployment
+*~
