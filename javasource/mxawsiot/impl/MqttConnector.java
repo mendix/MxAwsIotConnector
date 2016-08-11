@@ -9,6 +9,7 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,6 +88,12 @@ public class MqttConnector {
         public MqttConnection(ILogNode logger, String brokerHost, Long brokerPort, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
             logger.info("new MqttConnection");
             this.logger = logger;
+            //String clientId = "JavaSample";
+            String hostname = InetAddress.getLocalHost().getHostName();
+            String xasId = Core.getXASId();
+            String clientId = "MxClient_" +  xasId + "_" + hostname + "_" + brokerHost + "_" + brokerPort;
+            logger.info("new MqttConnection client id " + clientId);
+
             boolean useSsl = (ClientCertificate != null && !ClientCertificate.equals(""));
             String broker = String.format("tcp://%s:%d", brokerHost, brokerPort);
             MqttConnectOptions connOpts = new MqttConnectOptions();
@@ -95,7 +102,8 @@ public class MqttConnector {
                 broker = String.format("ssl://%s:%d", brokerHost, brokerPort);
                 connOpts = new MqttConnectOptions();
                 connOpts.setConnectionTimeout(60);
-                connOpts.setKeepAliveInterval(60);
+                connOpts.setKeepAliveInterval(0);
+                connOpts.setCleanSession(true);
                 try {
                     String resourcesPath = null;
                     try {
@@ -118,7 +126,6 @@ public class MqttConnector {
                     throw e;
                 }
             }
-            String clientId = "JavaSample";
             MemoryPersistence persistence = new MemoryPersistence();
 
             try {
@@ -142,7 +149,7 @@ public class MqttConnector {
         }
 
         public void subscribe(String topic, String onMessageMicroflow) throws MqttException {
-            logger.info("MqttConnection.subscribe");
+            logger.info(String.format("MqttConnection.subscribe: %s",client.getClientId()));
             try {
                 client.subscribe(topic);
 
@@ -153,18 +160,23 @@ public class MqttConnector {
 
                     @Override
                     public void connectionLost(Throwable throwable) {
-                        logger.info("connectionLost: " + throwable.getMessage());
+                        logger.info(String.format("connectionLost: %s, %s", throwable.getMessage(), client.getClientId()));
                         logger.warn(throwable);
+                        try {
+                            client.connect();
+                        } catch (MqttException e) {
+                            logger.error(e);
+                        }
                     }
 
                     @Override
                     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
                         try {
-                            logger.info(String.format("messageArrived: %s, %s", s, new String(mqttMessage.getPayload())));
+                            logger.info(String.format("messageArrived: %s, %s, %s", s, new String(mqttMessage.getPayload()), client.getClientId()));
                             IContext ctx = Core.createSystemContext();
 
                             ISession session = ctx.getSession();
-                            logger.info(String.format("Calling onMessage microflow: %s", microflow));
+                            logger.info(String.format("Calling onMessage microflow: %s, %s", microflow, client.getClientId()));
                             //Core.executeAsync(ctx, microflow, true, ImmutableMap.of("Topic", s, "Payload", new String(mqttMessage.getPayload())));
                             final ImmutableMap map = ImmutableMap.of("Topic", s, "Payload", new String(mqttMessage.getPayload()));
                             logger.info("Parameter map: " + map);
@@ -176,7 +188,7 @@ public class MqttConnector {
 
                     @Override
                     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-                        logger.info("deliveryComplete");
+                        logger.info(String.format("deliveryComplete: %s",client.getClientId()));
                     }
                 });
 
@@ -189,21 +201,24 @@ public class MqttConnector {
         }
 
         public void publish(String topic, String message) throws MqttException {
-            logger.info("MqttConnection.publish: %s, %s".format(topic, message));
+            logger.info(String.format("MqttConnection.publish: %s, %s, %s",topic, message,client.getClientId()));
             try {
                 MqttMessage payload = new MqttMessage(message.getBytes());
-                int qos = 1;
+                //int qos = 1;
+                int qos = 0;
                 payload.setQos(qos);
+                logger.info("Message publishing");
                 client.publish(topic, payload);
                 logger.info("Message published");
             } catch (Exception e) {
+                logger.error(String.format("mqtt publish failed: %s",e.getMessage()));
                 logger.error(e);
                 throw e;
             }
         }
 
         public void unsubscribe(String topicName) throws MqttException {
-            logger.info(String.format("unsubscribe: %s", topicName));
+            logger.info(String.format("unsubscribe: %s, %s", topicName, client.getClientId()));
             try {
                 client.unsubscribe(topicName);
             } catch (MqttException e) {

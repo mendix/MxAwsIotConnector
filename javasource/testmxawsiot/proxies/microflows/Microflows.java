@@ -14,6 +14,18 @@ import com.mendix.systemwideinterfaces.core.IContext;
 public class Microflows
 {
 	// These are the microflows for the TestMxAwsIoT module
+	public static void nestedPublishMqttMessages(IContext context)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			Core.execute(context, "TestMxAwsIoT.NestedPublishMqttMessages", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void onMessageMicroflow(IContext context, String _payload, String _topic)
 	{
 		try
@@ -88,6 +100,18 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static void testNestedPublishMqttMessage(IContext context)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			Core.execute(context, "TestMxAwsIoT.TestNestedPublishMqttMessage", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void testPublishMqttMessage(IContext context)
 	{
 		try
@@ -100,12 +124,36 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static void testSubscribeMqttTopic(IContext context)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			Core.execute(context, "TestMxAwsIoT.TestSubscribeMqttTopic", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void testSubscribeUnsubscribeMqttTopic(IContext context)
 	{
 		try
 		{
 			Map<String, Object> params = new HashMap<String, Object>();
 			Core.execute(context, "TestMxAwsIoT.TestSubscribeUnsubscribeMqttTopic", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
+	public static void testUnsubscribeMqttTopic(IContext context)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			Core.execute(context, "TestMxAwsIoT.TestUnsubscribeMqttTopic", params);
 		}
 		catch (CoreException e)
 		{
