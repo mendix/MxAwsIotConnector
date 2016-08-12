@@ -105,6 +105,10 @@ This connector is licensed under the Apache v2 license.
 
 * 0.9 - 2016-07-13 - initial public release
 
+* 1.0 - 2016-08-12 - Bug fixes
+  * Client id should be unique per client
+  * Fixed problem with subscribing to multiple topics, messages are now delivered to the correct microflow
+
  [1]: docs/images/list-things-mf.png
  [2]: docs/images/list-things-conf.png
  [3]: https://aws.amazon.com/iot/

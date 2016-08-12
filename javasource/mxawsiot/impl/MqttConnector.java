@@ -1,11 +1,11 @@
 package mxawsiot.impl;
 
-import com.google.common.collect.ImmutableMap;
 import com.mendix.core.Core;
 import com.mendix.logging.ILogNode;
-import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.systemwideinterfaces.core.ISession;
-import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.File;
@@ -91,7 +91,7 @@ public class MqttConnector {
             //String clientId = "JavaSample";
             String hostname = InetAddress.getLocalHost().getHostName();
             String xasId = Core.getXASId();
-            String clientId = "MxClient_" +  xasId + "_" + hostname + "_" + brokerHost + "_" + brokerPort;
+            String clientId = "MxClient_" + xasId + "_" + hostname + "_" + brokerHost + "_" + brokerPort;
             logger.info("new MqttConnection client id " + clientId);
 
             boolean useSsl = (ClientCertificate != null && !ClientCertificate.equals(""));
@@ -132,6 +132,7 @@ public class MqttConnector {
                 this.client = new MqttClient(broker, clientId, persistence);
                 logger.info("Connecting to broker: " + broker);
                 client.connect(connOpts);
+                client.setCallback(new MxMqttCallback(logger, client, subscriptions));
                 logger.info("Connected");
             } catch (Exception e) {
                 logger.error(e);
@@ -149,49 +150,12 @@ public class MqttConnector {
         }
 
         public void subscribe(String topic, String onMessageMicroflow) throws MqttException {
-            logger.info(String.format("MqttConnection.subscribe: %s",client.getClientId()));
+            logger.info(String.format("MqttConnection.subscribe: %s", client.getClientId()));
             try {
                 client.subscribe(topic);
 
                 //final IContext ctx = this.createContext();
                 final String microflow = onMessageMicroflow;
-
-                client.setCallback(new MqttCallback() {
-
-                    @Override
-                    public void connectionLost(Throwable throwable) {
-                        logger.info(String.format("connectionLost: %s, %s", throwable.getMessage(), client.getClientId()));
-                        logger.warn(throwable);
-                        try {
-                            client.connect();
-                        } catch (MqttException e) {
-                            logger.error(e);
-                        }
-                    }
-
-                    @Override
-                    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-                        try {
-                            logger.info(String.format("messageArrived: %s, %s, %s", s, new String(mqttMessage.getPayload()), client.getClientId()));
-                            IContext ctx = Core.createSystemContext();
-
-                            ISession session = ctx.getSession();
-                            logger.info(String.format("Calling onMessage microflow: %s, %s", microflow, client.getClientId()));
-                            //Core.executeAsync(ctx, microflow, true, ImmutableMap.of("Topic", s, "Payload", new String(mqttMessage.getPayload())));
-                            final ImmutableMap map = ImmutableMap.of("Topic", s, "Payload", new String(mqttMessage.getPayload()));
-                            logger.info("Parameter map: " + map);
-                            Core.execute(ctx, microflow, true, map);
-                        } catch (Exception e) {
-                            logger.error(e);
-                        }
-                    }
-
-                    @Override
-                    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-                        logger.info(String.format("deliveryComplete: %s",client.getClientId()));
-                    }
-                });
-
                 subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
             } catch (Exception e) {
                 logger.error(e);
@@ -201,7 +165,7 @@ public class MqttConnector {
         }
 
         public void publish(String topic, String message) throws MqttException {
-            logger.info(String.format("MqttConnection.publish: %s, %s, %s",topic, message,client.getClientId()));
+            logger.info(String.format("MqttConnection.publish: %s, %s, %s", topic, message, client.getClientId()));
             try {
                 MqttMessage payload = new MqttMessage(message.getBytes());
                 //int qos = 1;
@@ -211,7 +175,7 @@ public class MqttConnector {
                 client.publish(topic, payload);
                 logger.info("Message published");
             } catch (Exception e) {
-                logger.error(String.format("mqtt publish failed: %s",e.getMessage()));
+                logger.error(String.format("mqtt publish failed: %s", e.getMessage()));
                 logger.error(e);
                 throw e;
             }

@@ -13,3 +13,5 @@ releases
 *.swp
 deployment
 *~
+scripts/env-ako.cmd
+

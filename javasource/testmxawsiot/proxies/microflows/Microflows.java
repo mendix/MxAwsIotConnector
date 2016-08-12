@@ -40,6 +40,34 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static void onTopic1MessageMicroflow(IContext context, String _payload, String _topic)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("Payload", _payload);
+			params.put("Topic", _topic);
+			Core.execute(context, "TestMxAwsIoT.OnTopic1MessageMicroflow", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
+	public static void onTopic2MessageMicroflow(IContext context, String _payload, String _topic)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("Payload", _payload);
+			params.put("Topic", _topic);
+			Core.execute(context, "TestMxAwsIoT.OnTopic2MessageMicroflow", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void testDescribeEndpoint(IContext context)
 	{
 		try
@@ -130,6 +158,18 @@ public class Microflows
 		{
 			Map<String, Object> params = new HashMap<String, Object>();
 			Core.execute(context, "TestMxAwsIoT.TestSubscribeMqttTopic", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
+	public static void testSubscribeTwoMosquittoTopics(IContext context)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			Core.execute(context, "TestMxAwsIoT.TestSubscribeTwoMosquittoTopics", params);
 		}
 		catch (CoreException e)
 		{
