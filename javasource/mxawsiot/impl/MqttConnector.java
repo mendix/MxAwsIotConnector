@@ -153,9 +153,6 @@ public class MqttConnector {
             logger.info(String.format("MqttConnection.subscribe: %s", client.getClientId()));
             try {
                 client.subscribe(topic);
-
-                //final IContext ctx = this.createContext();
-                final String microflow = onMessageMicroflow;
                 subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
             } catch (Exception e) {
                 logger.error(e);
