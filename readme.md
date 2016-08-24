@@ -109,6 +109,9 @@ This connector is licensed under the Apache v2 license.
   * Client id should be unique per client
   * Fixed problem with subscribing to multiple topics, messages are now delivered to the correct microflow
 
+* 0.9.2 - 2016-08-24 - Bug fixes
+  * Fixed MQTT topic wildcard subscriptions
+
  [1]: docs/images/list-things-mf.png
  [2]: docs/images/list-things-conf.png
  [3]: https://aws.amazon.com/iot/

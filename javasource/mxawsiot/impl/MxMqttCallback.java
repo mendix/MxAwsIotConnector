@@ -8,6 +8,7 @@ import com.mendix.systemwideinterfaces.core.ISession;
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import static org.bouncycastle.crypto.tls.ConnectionEnd.client;
 
@@ -42,8 +43,9 @@ public class MxMqttCallback implements MqttCallback {
             logger.info(String.format("messageArrived: %s, %s, %s", topic, new String(mqttMessage.getPayload()), client.getClientId()));
             IContext ctx = Core.createSystemContext();
             ISession session = ctx.getSession();
-            if(subscriptions.containsKey(topic)) {
-                String microflow = subscriptions.get(topic).getOnMessageMicroflow();
+            MqttSubscription subscription = getSubscriptionForTopic(topic);
+            if(subscription != null) {
+                String microflow = subscription.getOnMessageMicroflow();
                 logger.info(String.format("Calling onMessage microflow: %s, %s", microflow, client.getClientId()));
                 //Core.executeAsync(ctx, microflow, true, ImmutableMap.of("Topic", s, "Payload", new String(mqttMessage.getPayload())));
                 final ImmutableMap map = ImmutableMap.of("Topic", topic, "Payload", new String(mqttMessage.getPayload()));
@@ -55,6 +57,26 @@ public class MxMqttCallback implements MqttCallback {
         } catch (Exception e) {
             logger.error(e);
         }
+    }
+    /**
+     * find possibly wildcarded subscription for specific topic
+     *
+     */
+    private MqttSubscription getSubscriptionForTopic(String topic) {
+
+        logger.info("getSubscriptionForTopic: " + topic);
+        Iterator<String> subscriptionTopics = subscriptions.keySet().iterator();
+        while(subscriptionTopics.hasNext()){
+            String topicWithWildcards = subscriptionTopics.next();
+            String topicWithWildcardsRe = topicWithWildcards.replaceAll("\\+","[^/]+").replaceAll("/#","\\(|/.*\\)");
+            logger.info(String.format("Comparing topic %s with subscription %s as regex %s",topic,topicWithWildcards,topicWithWildcardsRe));
+            if(topic.matches(topicWithWildcardsRe)){
+                logger.info("Found subscription " + topicWithWildcards);
+                return subscriptions.get(topicWithWildcards);
+            }
+        }
+        logger.info("No subscription found for topic " + topic);
+        return null;
     }
 
     @Override

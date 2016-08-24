@@ -176,6 +176,18 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static void testSubscribeTwoWildcardMosquittoTopics(IContext context)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			Core.execute(context, "TestMxAwsIoT.TestSubscribeTwoWildcardMosquittoTopics", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void testSubscribeUnsubscribeMqttTopic(IContext context)
 	{
 		try
