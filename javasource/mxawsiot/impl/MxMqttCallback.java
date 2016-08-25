@@ -69,6 +69,7 @@ public class MxMqttCallback implements MqttCallback {
         while(subscriptionTopics.hasNext()){
             String topicWithWildcards = subscriptionTopics.next();
             String topicWithWildcardsRe = topicWithWildcards.replaceAll("\\+","[^/]+").replaceAll("/#","\\(|/.*\\)");
+            topicWithWildcardsRe = topicWithWildcardsRe.replace("$","\\$");
             logger.info(String.format("Comparing topic %s with subscription %s as regex %s",topic,topicWithWildcards,topicWithWildcardsRe));
             if(topic.matches(topicWithWildcardsRe)){
                 logger.info("Found subscription " + topicWithWildcards);
