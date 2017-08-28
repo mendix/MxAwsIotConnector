@@ -2,10 +2,6 @@
 
 This connector enables you to easily connect to IoT devices and data on [AWS IoT][3].
 
-Please note that this connector is currently in beta. Changes to the parameters of the actions
-are planned. This means that when you upgrade to a newer version, you will have to specify
-the parameter values again.
-
 ## Usage
 
 The connector consists of types of microflow actions:
