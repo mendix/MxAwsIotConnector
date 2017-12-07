@@ -91,7 +91,7 @@ public class MqttConnector {
             //String clientId = "JavaSample";
             String hostname = InetAddress.getLocalHost().getHostName();
             String xasId = Core.getXASId();
-            String clientId = "MxClient_" + xasId + "_" + hostname + "_" + brokerHost + "_" + brokerPort;
+            String clientId = "bluemix-receiver";
             logger.info("new MqttConnection client id " + clientId);
 
             boolean useSsl = (ClientCertificate != null && !ClientCertificate.equals(""));
