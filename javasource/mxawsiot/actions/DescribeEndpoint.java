@@ -17,13 +17,13 @@ import mxawsiot.impl.IoTConnector;
 /**
  * Describe endpoint for IoT Thing rest calls
  */
-public class DescribeEndpoint extends CustomJavaAction<String>
+public class DescribeEndpoint extends CustomJavaAction<java.lang.String>
 {
-	private String AwsAccessKeyId;
-	private String AwsSecretAccessKey;
-	private String Region;
+	private java.lang.String AwsAccessKeyId;
+	private java.lang.String AwsSecretAccessKey;
+	private java.lang.String Region;
 
-	public DescribeEndpoint(IContext context, String AwsAccessKeyId, String AwsSecretAccessKey, String Region)
+	public DescribeEndpoint(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
@@ -32,7 +32,7 @@ public class DescribeEndpoint extends CustomJavaAction<String>
 	}
 
 	@Override
-	public String executeAction() throws Exception
+	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         IoTConnector connector = new IoTConnector();
@@ -48,7 +48,7 @@ public class DescribeEndpoint extends CustomJavaAction<String>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "DescribeEndpoint";
 	}

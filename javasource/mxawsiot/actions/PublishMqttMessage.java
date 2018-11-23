@@ -15,18 +15,18 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 import mxawsiot.impl.MqttConnector;
 
-public class PublishMqttMessage extends CustomJavaAction<Boolean>
+public class PublishMqttMessage extends CustomJavaAction<java.lang.Boolean>
 {
-	private String BrokerHost;
-	private Long BrokerPort;
-	private String TopicName;
-	private String Payload;
-	private String CA;
-	private String ClientCertificate;
-	private String ClientKey;
-	private String CertificatePassword;
+	private java.lang.String BrokerHost;
+	private java.lang.Long BrokerPort;
+	private java.lang.String TopicName;
+	private java.lang.String Payload;
+	private java.lang.String CA;
+	private java.lang.String ClientCertificate;
+	private java.lang.String ClientKey;
+	private java.lang.String CertificatePassword;
 
-	public PublishMqttMessage(IContext context, String BrokerHost, Long BrokerPort, String TopicName, String Payload, String CA, String ClientCertificate, String ClientKey, String CertificatePassword)
+	public PublishMqttMessage(IContext context, java.lang.String BrokerHost, java.lang.Long BrokerPort, java.lang.String TopicName, java.lang.String Payload, java.lang.String CA, java.lang.String ClientCertificate, java.lang.String ClientKey, java.lang.String CertificatePassword)
 	{
 		super(context);
 		this.BrokerHost = BrokerHost;
@@ -40,7 +40,7 @@ public class PublishMqttMessage extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         MqttConnector connector = new MqttConnector();
@@ -70,7 +70,7 @@ public class PublishMqttMessage extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "PublishMqttMessage";
 	}

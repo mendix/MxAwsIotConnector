@@ -16,8 +16,6 @@ import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.webui.CustomJavaAction;
 import mxawsiot.impl.IoTConnector;
 import mxawsiot.proxies.IotThing;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * List all registered AWS IoT things available to specified AWS account.
@@ -26,19 +24,19 @@ import org.json.JSONObject;
  * http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/iot/model/ListThingsRequest.html
  * http://docs.amazonaws.cn/AWSJavaSDK/latest/javadoc/com/amazonaws/services/iot/AWSIotClient.html
  */
-public class ListThingsToEntities extends CustomJavaAction<Boolean>
+public class ListThingsToEntities extends CustomJavaAction<java.lang.Boolean>
 {
-	private String AwsAccessKeyId;
-	private String AwsSecretAccessKey;
-	private String Region;
-	private String AttributeName;
-	private String AttributeValue;
+	private java.lang.String AwsAccessKeyId;
+	private java.lang.String AwsSecretAccessKey;
+	private java.lang.String Region;
+	private java.lang.String AttributeName;
+	private java.lang.String AttributeValue;
 	private IMendixObject __ResultFirstEntity;
 	private mxawsiot.proxies.IotThing ResultFirstEntity;
 	private java.util.List<IMendixObject> __ResultList;
 	private java.util.List<mxawsiot.proxies.IotThing> ResultList;
 
-	public ListThingsToEntities(IContext context, String AwsAccessKeyId, String AwsSecretAccessKey, String Region, String AttributeName, String AttributeValue, IMendixObject ResultFirstEntity, java.util.List<IMendixObject> ResultList)
+	public ListThingsToEntities(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String AttributeName, java.lang.String AttributeValue, IMendixObject ResultFirstEntity, java.util.List<IMendixObject> ResultList)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
@@ -51,7 +49,7 @@ public class ListThingsToEntities extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		this.ResultFirstEntity = __ResultFirstEntity == null ? null : mxawsiot.proxies.IotThing.initialize(getContext(), __ResultFirstEntity);
 
@@ -66,9 +64,9 @@ public class ListThingsToEntities extends CustomJavaAction<Boolean>
         connector.setCredentials(this.AwsAccessKeyId, this.AwsSecretAccessKey);
 		connector.setRegion(this.Region);
 		JsonNode jsonResponse = connector.listThingsRestJson();
-        JSONArray things = jsonResponse.getObject().getJSONArray("things");
+        org.json.JSONArray things = jsonResponse.getObject().getJSONArray("things");
         for (int i = 0; i < things.length(); i++) {
-            JSONObject thing = things.getJSONObject(i);
+            org.json.JSONObject thing = things.getJSONObject(i);
             mxawsiot.proxies.IotThing t = new IotThing(this.getContext());
             t.setName(thing.getString("thingName"));
             this.__ResultList.add(t.getMendixObject());
@@ -84,7 +82,7 @@ public class ListThingsToEntities extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "ListThingsToEntities";
 	}

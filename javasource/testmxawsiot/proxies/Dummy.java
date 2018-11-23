@@ -63,7 +63,7 @@ public class Dummy
 
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
-	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.getSudoContext() can be used to obtain sudo access).
+	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
 	 */
 	public static testmxawsiot.proxies.Dummy initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -110,7 +110,7 @@ public class Dummy
 	/**
 	 * @return value of col1
 	 */
-	public final String getcol1()
+	public final java.lang.String getcol1()
 	{
 		return getcol1(getContext());
 	}
@@ -119,16 +119,16 @@ public class Dummy
 	 * @param context
 	 * @return value of col1
 	 */
-	public final String getcol1(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getcol1(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.col1.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.col1.toString());
 	}
 
 	/**
 	 * Set value of col1
 	 * @param col1
 	 */
-	public final void setcol1(String col1)
+	public final void setcol1(java.lang.String col1)
 	{
 		setcol1(getContext(), col1);
 	}
@@ -138,7 +138,7 @@ public class Dummy
 	 * @param context
 	 * @param col1
 	 */
-	public final void setcol1(com.mendix.systemwideinterfaces.core.IContext context, String col1)
+	public final void setcol1(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String col1)
 	{
 		getMendixObject().setValue(context, MemberNames.col1.toString(), col1);
 	}

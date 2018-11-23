@@ -66,7 +66,7 @@ public class Thing
 
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
-	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.getSudoContext() can be used to obtain sudo access).
+	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
 	 */
 	public static testmxawsiot.proxies.Thing initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -113,7 +113,7 @@ public class Thing
 	/**
 	 * @return value of Name
 	 */
-	public final String getName()
+	public final java.lang.String getName()
 	{
 		return getName(getContext());
 	}
@@ -122,16 +122,16 @@ public class Thing
 	 * @param context
 	 * @return value of Name
 	 */
-	public final String getName(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getName(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.Name.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.Name.toString());
 	}
 
 	/**
 	 * Set value of Name
 	 * @param name
 	 */
-	public final void setName(String name)
+	public final void setName(java.lang.String name)
 	{
 		setName(getContext(), name);
 	}
@@ -141,7 +141,7 @@ public class Thing
 	 * @param context
 	 * @param name
 	 */
-	public final void setName(com.mendix.systemwideinterfaces.core.IContext context, String name)
+	public final void setName(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String name)
 	{
 		getMendixObject().setValue(context, MemberNames.Name.toString(), name);
 	}
@@ -149,7 +149,7 @@ public class Thing
 	/**
 	 * @return value of Location
 	 */
-	public final String getLocation()
+	public final java.lang.String getLocation()
 	{
 		return getLocation(getContext());
 	}
@@ -158,16 +158,16 @@ public class Thing
 	 * @param context
 	 * @return value of Location
 	 */
-	public final String getLocation(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getLocation(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.Location.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.Location.toString());
 	}
 
 	/**
 	 * Set value of Location
 	 * @param location
 	 */
-	public final void setLocation(String location)
+	public final void setLocation(java.lang.String location)
 	{
 		setLocation(getContext(), location);
 	}
@@ -177,7 +177,7 @@ public class Thing
 	 * @param context
 	 * @param location
 	 */
-	public final void setLocation(com.mendix.systemwideinterfaces.core.IContext context, String location)
+	public final void setLocation(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String location)
 	{
 		getMendixObject().setValue(context, MemberNames.Location.toString(), location);
 	}
@@ -185,7 +185,7 @@ public class Thing
 	/**
 	 * @return value of HasTemperatureSensor
 	 */
-	public final Boolean getHasTemperatureSensor()
+	public final java.lang.Boolean getHasTemperatureSensor()
 	{
 		return getHasTemperatureSensor(getContext());
 	}
@@ -194,16 +194,16 @@ public class Thing
 	 * @param context
 	 * @return value of HasTemperatureSensor
 	 */
-	public final Boolean getHasTemperatureSensor(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.Boolean getHasTemperatureSensor(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (Boolean) getMendixObject().getValue(context, MemberNames.HasTemperatureSensor.toString());
+		return (java.lang.Boolean) getMendixObject().getValue(context, MemberNames.HasTemperatureSensor.toString());
 	}
 
 	/**
 	 * Set value of HasTemperatureSensor
 	 * @param hastemperaturesensor
 	 */
-	public final void setHasTemperatureSensor(Boolean hastemperaturesensor)
+	public final void setHasTemperatureSensor(java.lang.Boolean hastemperaturesensor)
 	{
 		setHasTemperatureSensor(getContext(), hastemperaturesensor);
 	}
@@ -213,7 +213,7 @@ public class Thing
 	 * @param context
 	 * @param hastemperaturesensor
 	 */
-	public final void setHasTemperatureSensor(com.mendix.systemwideinterfaces.core.IContext context, Boolean hastemperaturesensor)
+	public final void setHasTemperatureSensor(com.mendix.systemwideinterfaces.core.IContext context, java.lang.Boolean hastemperaturesensor)
 	{
 		getMendixObject().setValue(context, MemberNames.HasTemperatureSensor.toString(), hastemperaturesensor);
 	}
@@ -221,7 +221,7 @@ public class Thing
 	/**
 	 * @return value of DefaultClientId
 	 */
-	public final String getDefaultClientId()
+	public final java.lang.String getDefaultClientId()
 	{
 		return getDefaultClientId(getContext());
 	}
@@ -230,16 +230,16 @@ public class Thing
 	 * @param context
 	 * @return value of DefaultClientId
 	 */
-	public final String getDefaultClientId(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getDefaultClientId(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.DefaultClientId.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.DefaultClientId.toString());
 	}
 
 	/**
 	 * Set value of DefaultClientId
 	 * @param defaultclientid
 	 */
-	public final void setDefaultClientId(String defaultclientid)
+	public final void setDefaultClientId(java.lang.String defaultclientid)
 	{
 		setDefaultClientId(getContext(), defaultclientid);
 	}
@@ -249,7 +249,7 @@ public class Thing
 	 * @param context
 	 * @param defaultclientid
 	 */
-	public final void setDefaultClientId(com.mendix.systemwideinterfaces.core.IContext context, String defaultclientid)
+	public final void setDefaultClientId(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String defaultclientid)
 	{
 		getMendixObject().setValue(context, MemberNames.DefaultClientId.toString(), defaultclientid);
 	}
