@@ -18,15 +18,15 @@ import mxawsiot.impl.IoTConnector;
  * Get current state for thing
  * 
  */
-public class GetThingState extends CustomJavaAction<String>
+public class GetThingState extends CustomJavaAction<java.lang.String>
 {
-	private String AwsAccessKeyId;
-	private String AwsSecretAccessKey;
-	private String Region;
-	private String ThingName;
-	private String Endpoint;
+	private java.lang.String AwsAccessKeyId;
+	private java.lang.String AwsSecretAccessKey;
+	private java.lang.String Region;
+	private java.lang.String ThingName;
+	private java.lang.String Endpoint;
 
-	public GetThingState(IContext context, String AwsAccessKeyId, String AwsSecretAccessKey, String Region, String ThingName, String Endpoint)
+	public GetThingState(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String ThingName, java.lang.String Endpoint)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
@@ -37,7 +37,7 @@ public class GetThingState extends CustomJavaAction<String>
 	}
 
 	@Override
-	public String executeAction() throws Exception
+	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
 		//throw new com.mendix.systemwideinterfaces.MendixRuntimeException("Java action was not implemented");
@@ -55,7 +55,7 @@ public class GetThingState extends CustomJavaAction<String>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "GetThingState";
 	}

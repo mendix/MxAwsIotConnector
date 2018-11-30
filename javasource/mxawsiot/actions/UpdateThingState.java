@@ -18,16 +18,16 @@ import mxawsiot.impl.IoTConnector;
  * Set current state for thing
  * 
  */
-public class UpdateThingState extends CustomJavaAction<Boolean>
+public class UpdateThingState extends CustomJavaAction<java.lang.Boolean>
 {
-	private String AwsAccessKeyId;
-	private String AwsSecretAccessKey;
-	private String Region;
-	private String ThingName;
-	private String DesiredThingStatus;
-	private String Endpoint;
+	private java.lang.String AwsAccessKeyId;
+	private java.lang.String AwsSecretAccessKey;
+	private java.lang.String Region;
+	private java.lang.String ThingName;
+	private java.lang.String DesiredThingStatus;
+	private java.lang.String Endpoint;
 
-	public UpdateThingState(IContext context, String AwsAccessKeyId, String AwsSecretAccessKey, String Region, String ThingName, String DesiredThingStatus, String Endpoint)
+	public UpdateThingState(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String ThingName, java.lang.String DesiredThingStatus, java.lang.String Endpoint)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
@@ -39,7 +39,7 @@ public class UpdateThingState extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         IoTConnector connector = new IoTConnector();
@@ -57,7 +57,7 @@ public class UpdateThingState extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "UpdateThingState";
 	}

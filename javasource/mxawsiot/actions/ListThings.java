@@ -21,15 +21,15 @@ import mxawsiot.impl.IoTConnector;
  * http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/iot/model/ListThingsRequest.html
  * http://docs.amazonaws.cn/AWSJavaSDK/latest/javadoc/com/amazonaws/services/iot/AWSIotClient.html
  */
-public class ListThings extends CustomJavaAction<String>
+public class ListThings extends CustomJavaAction<java.lang.String>
 {
-	private String AwsAccessKeyId;
-	private String AwsSecretAccessKey;
-	private String Region;
-	private String AttributeName;
-	private String AttributeValue;
+	private java.lang.String AwsAccessKeyId;
+	private java.lang.String AwsSecretAccessKey;
+	private java.lang.String Region;
+	private java.lang.String AttributeName;
+	private java.lang.String AttributeValue;
 
-	public ListThings(IContext context, String AwsAccessKeyId, String AwsSecretAccessKey, String Region, String AttributeName, String AttributeValue)
+	public ListThings(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String AttributeName, java.lang.String AttributeValue)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
@@ -40,7 +40,7 @@ public class ListThings extends CustomJavaAction<String>
 	}
 
 	@Override
-	public String executeAction() throws Exception
+	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         //throw new com.mendix.systemwideinterfaces.MendixRuntimeException("Java action was not implemented");
@@ -57,7 +57,7 @@ public class ListThings extends CustomJavaAction<String>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "ListThings";
 	}

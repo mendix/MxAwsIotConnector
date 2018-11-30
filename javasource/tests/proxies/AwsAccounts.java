@@ -66,7 +66,7 @@ public class AwsAccounts
 
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
-	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.getSudoContext() can be used to obtain sudo access).
+	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
 	 */
 	public static tests.proxies.AwsAccounts initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -121,7 +121,7 @@ public class AwsAccounts
 	/**
 	 * @return value of AccountName
 	 */
-	public final String getAccountName()
+	public final java.lang.String getAccountName()
 	{
 		return getAccountName(getContext());
 	}
@@ -130,16 +130,16 @@ public class AwsAccounts
 	 * @param context
 	 * @return value of AccountName
 	 */
-	public final String getAccountName(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getAccountName(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.AccountName.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.AccountName.toString());
 	}
 
 	/**
 	 * Set value of AccountName
 	 * @param accountname
 	 */
-	public final void setAccountName(String accountname)
+	public final void setAccountName(java.lang.String accountname)
 	{
 		setAccountName(getContext(), accountname);
 	}
@@ -149,7 +149,7 @@ public class AwsAccounts
 	 * @param context
 	 * @param accountname
 	 */
-	public final void setAccountName(com.mendix.systemwideinterfaces.core.IContext context, String accountname)
+	public final void setAccountName(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String accountname)
 	{
 		getMendixObject().setValue(context, MemberNames.AccountName.toString(), accountname);
 	}
@@ -157,7 +157,7 @@ public class AwsAccounts
 	/**
 	 * @return value of AwsAccessKeyId
 	 */
-	public final String getAwsAccessKeyId()
+	public final java.lang.String getAwsAccessKeyId()
 	{
 		return getAwsAccessKeyId(getContext());
 	}
@@ -166,16 +166,16 @@ public class AwsAccounts
 	 * @param context
 	 * @return value of AwsAccessKeyId
 	 */
-	public final String getAwsAccessKeyId(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getAwsAccessKeyId(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.AwsAccessKeyId.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.AwsAccessKeyId.toString());
 	}
 
 	/**
 	 * Set value of AwsAccessKeyId
 	 * @param awsaccesskeyid
 	 */
-	public final void setAwsAccessKeyId(String awsaccesskeyid)
+	public final void setAwsAccessKeyId(java.lang.String awsaccesskeyid)
 	{
 		setAwsAccessKeyId(getContext(), awsaccesskeyid);
 	}
@@ -185,7 +185,7 @@ public class AwsAccounts
 	 * @param context
 	 * @param awsaccesskeyid
 	 */
-	public final void setAwsAccessKeyId(com.mendix.systemwideinterfaces.core.IContext context, String awsaccesskeyid)
+	public final void setAwsAccessKeyId(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String awsaccesskeyid)
 	{
 		getMendixObject().setValue(context, MemberNames.AwsAccessKeyId.toString(), awsaccesskeyid);
 	}
@@ -193,7 +193,7 @@ public class AwsAccounts
 	/**
 	 * @return value of AwsSecretAccessKey
 	 */
-	public final String getAwsSecretAccessKey()
+	public final java.lang.String getAwsSecretAccessKey()
 	{
 		return getAwsSecretAccessKey(getContext());
 	}
@@ -202,16 +202,16 @@ public class AwsAccounts
 	 * @param context
 	 * @return value of AwsSecretAccessKey
 	 */
-	public final String getAwsSecretAccessKey(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getAwsSecretAccessKey(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.AwsSecretAccessKey.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.AwsSecretAccessKey.toString());
 	}
 
 	/**
 	 * Set value of AwsSecretAccessKey
 	 * @param awssecretaccesskey
 	 */
-	public final void setAwsSecretAccessKey(String awssecretaccesskey)
+	public final void setAwsSecretAccessKey(java.lang.String awssecretaccesskey)
 	{
 		setAwsSecretAccessKey(getContext(), awssecretaccesskey);
 	}
@@ -221,7 +221,7 @@ public class AwsAccounts
 	 * @param context
 	 * @param awssecretaccesskey
 	 */
-	public final void setAwsSecretAccessKey(com.mendix.systemwideinterfaces.core.IContext context, String awssecretaccesskey)
+	public final void setAwsSecretAccessKey(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String awssecretaccesskey)
 	{
 		getMendixObject().setValue(context, MemberNames.AwsSecretAccessKey.toString(), awssecretaccesskey);
 	}
@@ -229,7 +229,7 @@ public class AwsAccounts
 	/**
 	 * @return value of DefaultRegion
 	 */
-	public final String getDefaultRegion()
+	public final java.lang.String getDefaultRegion()
 	{
 		return getDefaultRegion(getContext());
 	}
@@ -238,16 +238,16 @@ public class AwsAccounts
 	 * @param context
 	 * @return value of DefaultRegion
 	 */
-	public final String getDefaultRegion(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getDefaultRegion(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.DefaultRegion.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.DefaultRegion.toString());
 	}
 
 	/**
 	 * Set value of DefaultRegion
 	 * @param defaultregion
 	 */
-	public final void setDefaultRegion(String defaultregion)
+	public final void setDefaultRegion(java.lang.String defaultregion)
 	{
 		setDefaultRegion(getContext(), defaultregion);
 	}
@@ -257,7 +257,7 @@ public class AwsAccounts
 	 * @param context
 	 * @param defaultregion
 	 */
-	public final void setDefaultRegion(com.mendix.systemwideinterfaces.core.IContext context, String defaultregion)
+	public final void setDefaultRegion(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String defaultregion)
 	{
 		getMendixObject().setValue(context, MemberNames.DefaultRegion.toString(), defaultregion);
 	}

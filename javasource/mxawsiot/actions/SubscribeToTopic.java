@@ -15,19 +15,19 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 import mxawsiot.impl.MqttConnector;
 
-public class SubscribeToTopic extends CustomJavaAction<Boolean>
+public class SubscribeToTopic extends CustomJavaAction<java.lang.Boolean>
 {
-	private String BrokerHost;
-	private Long BrokerPort;
-	private Long Timeout;
-	private String TopicName;
-	private String OnMessageMicroflow;
-	private String CA;
-	private String ClientCertificate;
-	private String ClientKey;
-	private String CertificatePassword;
+	private java.lang.String BrokerHost;
+	private java.lang.Long BrokerPort;
+	private java.lang.Long Timeout;
+	private java.lang.String TopicName;
+	private java.lang.String OnMessageMicroflow;
+	private java.lang.String CA;
+	private java.lang.String ClientCertificate;
+	private java.lang.String ClientKey;
+	private java.lang.String CertificatePassword;
 
-	public SubscribeToTopic(IContext context, String BrokerHost, Long BrokerPort, Long Timeout, String TopicName, String OnMessageMicroflow, String CA, String ClientCertificate, String ClientKey, String CertificatePassword)
+	public SubscribeToTopic(IContext context, java.lang.String BrokerHost, java.lang.Long BrokerPort, java.lang.Long Timeout, java.lang.String TopicName, java.lang.String OnMessageMicroflow, java.lang.String CA, java.lang.String ClientCertificate, java.lang.String ClientKey, java.lang.String CertificatePassword)
 	{
 		super(context);
 		this.BrokerHost = BrokerHost;
@@ -42,7 +42,7 @@ public class SubscribeToTopic extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         MqttConnector connector = new MqttConnector();
@@ -66,7 +66,7 @@ public class SubscribeToTopic extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "SubscribeToTopic";
 	}
