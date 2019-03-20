@@ -21,15 +21,15 @@ public class DescribeThing extends CustomJavaAction<java.lang.String>
 {
 	private java.lang.String AwsAccessKeyId;
 	private java.lang.String AwsSecretAccessKey;
-	private java.lang.String Region;
+	private java.lang.String AwsRegion;
 	private java.lang.String ThingName;
 
-	public DescribeThing(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String ThingName)
+	public DescribeThing(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String AwsRegion, java.lang.String ThingName)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
 		this.AwsSecretAccessKey = AwsSecretAccessKey;
-		this.Region = Region;
+		this.AwsRegion = AwsRegion;
 		this.ThingName = ThingName;
 	}
 
@@ -40,7 +40,7 @@ public class DescribeThing extends CustomJavaAction<java.lang.String>
 		IoTConnector connector = new IoTConnector();
 		connector.setLogger(Core.getLogger(DescribeThing.class.getName()));
 		connector.setCredentials(this.AwsAccessKeyId, this.AwsSecretAccessKey);
-		connector.setRegion(this.Region);
+		connector.setRegion(this.AwsRegion);
 		String result = connector.describeThing(this.ThingName);
 		return result;
 		// END USER CODE

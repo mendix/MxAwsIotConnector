@@ -22,20 +22,20 @@ public class UpdateThingState extends CustomJavaAction<java.lang.Boolean>
 {
 	private java.lang.String AwsAccessKeyId;
 	private java.lang.String AwsSecretAccessKey;
-	private java.lang.String Region;
+	private java.lang.String AwsEndpoint;
+	private java.lang.String AwsRegion;
 	private java.lang.String ThingName;
 	private java.lang.String DesiredThingStatus;
-	private java.lang.String Endpoint;
 
-	public UpdateThingState(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String ThingName, java.lang.String DesiredThingStatus, java.lang.String Endpoint)
+	public UpdateThingState(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String AwsEndpoint, java.lang.String AwsRegion, java.lang.String ThingName, java.lang.String DesiredThingStatus)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
 		this.AwsSecretAccessKey = AwsSecretAccessKey;
-		this.Region = Region;
+		this.AwsEndpoint = AwsEndpoint;
+		this.AwsRegion = AwsRegion;
 		this.ThingName = ThingName;
 		this.DesiredThingStatus = DesiredThingStatus;
-		this.Endpoint = Endpoint;
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class UpdateThingState extends CustomJavaAction<java.lang.Boolean>
         IoTConnector connector = new IoTConnector();
         connector.setLogger(Core.getLogger(UpdateThingState.class.getName()));
         connector.setCredentials(this.AwsAccessKeyId, this.AwsSecretAccessKey);
-        connector.setRegion(this.Region);
-        connector.setEndpoint(this.Endpoint);
+        connector.setRegion(this.AwsRegion);
+        connector.setEndpoint(this.AwsEndpoint);
         String result = connector.updateThingShadow(this.ThingName, this.DesiredThingStatus);
         System.err.print(result);
         return true;

@@ -28,7 +28,7 @@ public class ListThingsToEntities extends CustomJavaAction<java.lang.Boolean>
 {
 	private java.lang.String AwsAccessKeyId;
 	private java.lang.String AwsSecretAccessKey;
-	private java.lang.String Region;
+	private java.lang.String AwsRegion;
 	private java.lang.String AttributeName;
 	private java.lang.String AttributeValue;
 	private IMendixObject __ResultFirstEntity;
@@ -36,12 +36,12 @@ public class ListThingsToEntities extends CustomJavaAction<java.lang.Boolean>
 	private java.util.List<IMendixObject> __ResultList;
 	private java.util.List<mxawsiot.proxies.IotThing> ResultList;
 
-	public ListThingsToEntities(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String Region, java.lang.String AttributeName, java.lang.String AttributeValue, IMendixObject ResultFirstEntity, java.util.List<IMendixObject> ResultList)
+	public ListThingsToEntities(IContext context, java.lang.String AwsAccessKeyId, java.lang.String AwsSecretAccessKey, java.lang.String AwsRegion, java.lang.String AttributeName, java.lang.String AttributeValue, IMendixObject ResultFirstEntity, java.util.List<IMendixObject> ResultList)
 	{
 		super(context);
 		this.AwsAccessKeyId = AwsAccessKeyId;
 		this.AwsSecretAccessKey = AwsSecretAccessKey;
-		this.Region = Region;
+		this.AwsRegion = AwsRegion;
 		this.AttributeName = AttributeName;
 		this.AttributeValue = AttributeValue;
 		this.__ResultFirstEntity = ResultFirstEntity;
@@ -62,7 +62,7 @@ public class ListThingsToEntities extends CustomJavaAction<java.lang.Boolean>
         IoTConnector connector = new IoTConnector();
         connector.setLogger(Core.getLogger(ListThingsToEntities.class.getName()));
         connector.setCredentials(this.AwsAccessKeyId, this.AwsSecretAccessKey);
-		connector.setRegion(this.Region);
+		connector.setRegion(this.AwsRegion);
 		JsonNode jsonResponse = connector.listThingsRestJson();
         org.json.JSONArray things = jsonResponse.getObject().getJSONArray("things");
         for (int i = 0; i < things.length(); i++) {
