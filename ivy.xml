@@ -11,7 +11,7 @@
         <dependency org="com.amazonaws" name="aws-java-sdk-acm" rev="1.11.3" conf="export->default"/>
         <dependency org="com.amazonaws" name="aws-java-sdk-iot" rev="1.11.3" conf="export->default"/>
         <dependency org="com.mashape.unirest" name="unirest-java" rev="1.4.9" conf="export->default"/>
-        <dependency org="org.eclipse.paho" name="org.eclipse.paho.client.mqttv3" rev="1.1.0" conf="export->default"/>
+        <dependency org="org.eclipse.paho" name="org.eclipse.paho.client.mqttv3" rev="1.2.5" conf="export->default"/>
         <dependency org="org.bouncycastle" name="bcprov-jdk16" rev="1.46" conf="export->default"/>
         <dependency org="org.bouncycastle" name="bcpkix-jdk15on" rev="1.54" conf="export->default"/>
         <dependency org="com.google.guava" name="guava" rev="27+" conf="export->default"/>

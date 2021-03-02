@@ -39,17 +39,20 @@ public class MqttConnector {
 
     public void subscribe(String brokerHost, Long brokerPort, String topicName, String onMessageMicroflow, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
         logger.info("MqttConnector.subscribe");
-        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword);
+        subscribe(brokerHost, brokerPort, topicName, onMessageMicroflow, CA, ClientCertificate, ClientKey, CertificatePassword, UUID.randomUUID().toString(), true);
+    }
+    public void subscribe(String brokerHost, Long brokerPort, String topicName, String onMessageMicroflow, String CA, String ClientCertificate, String ClientKey, String CertificatePassword, String clientId, Boolean startWithCleanSession) throws Exception {
+        logger.info("MqttConnector.subscribe");
+        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword, clientId, startWithCleanSession);
         connection.subscribe(topicName, onMessageMicroflow);
     }
-
     public void publish(String brokerHost, Long brokerPort, String topicName, String message, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
         logger.info("MqttConnector.publish");
-        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword);
+        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword, null, false);
         connection.publish(topicName, message);
     }
 
-    private MqttConnection getMqttConnection(String brokerHost, Long brokerPort, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
+    private MqttConnection getMqttConnection(String brokerHost, Long brokerPort, String CA, String ClientCertificate, String ClientKey, String CertificatePassword, String clientId, Boolean startWithCleanSession) throws Exception {
         String key = brokerHost + ":" + brokerPort;
         MqttConnection handler;
         synchronized (mqttHandlers) {
@@ -58,7 +61,7 @@ public class MqttConnector {
             if (!mqttHandlers.containsKey(key)) {
                 logger.info("creating new MqttConnection");
                 try {
-                    handler = new MqttConnection(logger, brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword);
+                    handler = new MqttConnection(logger, brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword, clientId, startWithCleanSession);
                     mqttHandlers.put(key, handler);
                 } catch (Exception e) {
                     logger.error(e);
@@ -76,7 +79,7 @@ public class MqttConnector {
     }
 
     public void unsubscribe(String brokerHost, Long brokerPort, String topicName) throws Exception {
-        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null);
+        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null,null,true);
         connection.unsubscribe(topicName);
     }
 
@@ -86,13 +89,13 @@ public class MqttConnector {
         private MqttClient client;
         private HashMap<String, MqttSubscription> subscriptions = new HashMap<>();
 
-        public MqttConnection(ILogNode logger, String brokerHost, Long brokerPort, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
+        public MqttConnection(ILogNode logger, String brokerHost, Long brokerPort, String CA, String ClientCertificate, String ClientKey, String CertificatePassword, String clientId, Boolean startWithCleanSession) throws Exception {
             logger.info("new MqttConnection");
             this.logger = logger;
             //String clientId = "JavaSample";
             String hostname = InetAddress.getLocalHost().getHostName();
             String xasId = Core.getXASId();
-            String clientId = UUID.randomUUID().toString();
+            //String clientId = UUID.randomUUID().toString();
             logger.info("new MqttConnection client id " + clientId);
 
             boolean useSsl = (ClientCertificate != null && !ClientCertificate.equals(""));
@@ -104,7 +107,7 @@ public class MqttConnector {
                 connOpts = new MqttConnectOptions();
                 connOpts.setConnectionTimeout(60);
                 connOpts.setKeepAliveInterval(0);
-                connOpts.setCleanSession(true);
+                connOpts.setCleanSession(startWithCleanSession);
                 try {
                     String resourcesPath = null;
                     try {

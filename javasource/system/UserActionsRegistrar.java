@@ -107,6 +107,7 @@ public class UserActionsRegistrar
     registrator.registerUserAction(mxawsiot.actions.ListThingsToEntities.class);
     registrator.registerUserAction(mxawsiot.actions.PublishMqttMessage.class);
     registrator.registerUserAction(mxawsiot.actions.SubscribeToTopic.class);
+    registrator.registerUserAction(mxawsiot.actions.SubscribeToTopicWithClientId.class);
     registrator.registerUserAction(mxawsiot.actions.UnsubscribeMqttTopic.class);
     registrator.registerUserAction(mxawsiot.actions.UpdateThingState.class);
     registrator.registerUserAction(system.actions.VerifyPassword.class);
