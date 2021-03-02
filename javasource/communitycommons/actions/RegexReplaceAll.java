@@ -14,9 +14,10 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 
 /**
- * Performs a regular expression. Identical to the microflow expression funciton 'replaceAll'. Useful to be used from java, or in older Mendix versions. 
+ * Performs a regular expression. Similar to the replaceAll microflow function, but supports more advanced usages such as capture variables.
+ * 
  * For the regexp specification see:
- * http://download.oracle.com/javase/1.4.2/docs/api/java/util/regex/Pattern.html
+ * https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
  * 
  * A decent regexp tester can be found at:
  * http://www.fileformat.info/tool/regex.htm
@@ -35,7 +36,7 @@ public class RegexReplaceAll extends CustomJavaAction<java.lang.String>
 		this.replacement = replacement;
 	}
 
-	@Override
+	@java.lang.Override
 	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
@@ -46,7 +47,7 @@ public class RegexReplaceAll extends CustomJavaAction<java.lang.String>
 	/**
 	 * Returns a string representation of this action
 	 */
-	@Override
+	@java.lang.Override
 	public java.lang.String toString()
 	{
 		return "RegexReplaceAll";

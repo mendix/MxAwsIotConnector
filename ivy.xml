@@ -14,7 +14,7 @@
         <dependency org="org.eclipse.paho" name="org.eclipse.paho.client.mqttv3" rev="1.1.0" conf="export->default"/>
         <dependency org="org.bouncycastle" name="bcprov-jdk16" rev="1.46" conf="export->default"/>
         <dependency org="org.bouncycastle" name="bcpkix-jdk15on" rev="1.54" conf="export->default"/>
-        <dependency org="com.google.guava" name="guava" rev="19.0.0" conf="export->default"/>
+        <dependency org="com.google.guava" name="guava" rev="27+" conf="export->default"/>
 
         <!-- for testing -->
         <dependency org="ca.szc.configparser" name="java-configparser" rev="0.2"/>
@@ -33,12 +33,20 @@
         <dependency org="commons-lang" name="commons-lang" rev="2.5"/>
 
         <!-- other dependencies -->
+        <!--
         <dependency org="joda-time" name="joda-time" rev="2.8.2"/>
         <dependency org="org.apache.ws.commons.axiom" name="axiom-api" rev="1.2.19"/>
-        <dependency org="org.apache.commons" name="commons-lang3" rev="3.4"/>
+        -->
+        <dependency org="org.apache.commons" name="commons-lang3" rev="3.7"/>
+        <!--
         <dependency org="commons-fileupload" name="commons-fileupload" rev="1.3.2"/>
+        -->
         <dependency org="org.apache.pdfbox" name="pdfbox" rev="2.0.13"/>
+        <dependency org="commons-io" name="commons-io" rev="2.6"/>
+        <!--
         <dependency org="org.owasp.antisamy" name="antisamy" rev="1.5.3"/>
+-->
+        <dependency org="com.googlecode.owasp-java-html-sanitizer" name="owasp-java-html-sanitizer" rev="20181114.1"/>
 
     </dependencies>
 </ivy-module>

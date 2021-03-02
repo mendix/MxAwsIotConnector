@@ -1,14 +1,9 @@
 package system;
 
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
-
 import com.mendix.core.actionmanagement.IActionRegistrator;
 
-@Component(immediate = true)
 public class UserActionsRegistrar
 {
-  @Reference
   public void registerActions(IActionRegistrator registrator)
   {
     registrator.bundleComponentLoaded();
@@ -31,6 +26,7 @@ public class UserActionsRegistrar
     registrator.registerUserAction(communitycommons.actions.encryptMemberIfChanged.class);
     registrator.registerUserAction(communitycommons.actions.EncryptString.class);
     registrator.registerUserAction(communitycommons.actions.EndTransaction.class);
+    registrator.registerUserAction(communitycommons.actions.EnumerationFromString.class);
     registrator.registerUserAction(communitycommons.actions.EscapeHTML.class);
     registrator.registerUserAction(communitycommons.actions.executeMicroflowAsUser.class);
     registrator.registerUserAction(communitycommons.actions.executeMicroflowAsUser_1.class);
@@ -44,6 +40,7 @@ public class UserActionsRegistrar
     registrator.registerUserAction(communitycommons.actions.executeUnverifiedMicroflowInBatches.class);
     registrator.registerUserAction(communitycommons.actions.FileDocumentFromFile.class);
     registrator.registerUserAction(communitycommons.actions.FileFromFileDocument.class);
+    registrator.registerUserAction(communitycommons.actions.GenerateHMAC_SHA256.class);
     registrator.registerUserAction(communitycommons.actions.GenerateHMAC_SHA256_hash.class);
     registrator.registerUserAction(communitycommons.actions.GetApplicationUrl.class);
     registrator.registerUserAction(communitycommons.actions.GetCFInstanceIndex.class);
@@ -79,7 +76,7 @@ public class UserActionsRegistrar
     registrator.registerUserAction(communitycommons.actions.refreshClassByObject.class);
     registrator.registerUserAction(communitycommons.actions.RegexQuote.class);
     registrator.registerUserAction(communitycommons.actions.RegexReplaceAll.class);
-    registrator.registerUserAction(communitycommons.actions.RegexTest.class);
+    registrator.registerUserAction(communitycommons.actions.RemoveEnd.class);
     registrator.registerUserAction(communitycommons.actions.retrieveURL.class);
     registrator.registerUserAction(communitycommons.actions.RunMicroflowAsyncInQueue.class);
     registrator.registerUserAction(communitycommons.actions.StartTransaction.class);

@@ -9,46 +9,40 @@
 
 package communitycommons.actions;
 
-import communitycommons.StringUtils;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
+import communitycommons.StringUtils;
 
 /**
- * DEPRECATED: use isMatch() expression instead
- * 
- * Returns true if a value matches a regular expression. Matches the behavior of a Regexp validation rule.
- * 
- * For the regexp specification see:
- * http://download.oracle.com/javase/1.4.2/docs/api/java/util/regex/Pattern.html
- * A decent regexp tester can be found at:
+ * Removes a string (if present) from the end of an input string,
  */
-public class RegexTest extends CustomJavaAction<java.lang.Boolean>
+public class RemoveEnd extends CustomJavaAction<java.lang.String>
 {
-	private java.lang.String value;
-	private java.lang.String regex;
+	private java.lang.String input;
+	private java.lang.String toRemove;
 
-	public RegexTest(IContext context, java.lang.String value, java.lang.String regex)
+	public RemoveEnd(IContext context, java.lang.String input, java.lang.String toRemove)
 	{
 		super(context);
-		this.value = value;
-		this.regex = regex;
+		this.input = input;
+		this.toRemove = toRemove;
 	}
 
-	@Override
-	public java.lang.Boolean executeAction() throws Exception
+	@java.lang.Override
+	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		return StringUtils.regexTest(value, regex);
+		return StringUtils.removeEnd(input, toRemove);
 		// END USER CODE
 	}
 
 	/**
 	 * Returns a string representation of this action
 	 */
-	@Override
+	@java.lang.Override
 	public java.lang.String toString()
 	{
-		return "RegexTest";
+		return "RemoveEnd";
 	}
 
 	// BEGIN EXTRA CODE
