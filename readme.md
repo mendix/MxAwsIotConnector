@@ -62,6 +62,11 @@ To subscribe you need to provide certificate information as provided by AWS IoT.
 
  ![MQTT subscribe configuration][12]
 
+Alternatively you can use the *Data - subscribe with MQTT topic with client is* activity to establish a named connection.
+This will ensure messages that are sent when your app is down, will be delivered later when it is back up again.
+
+ ![Subscribe with client id][17]
+
 When a message is received the microflow you specified will be called using two string parameters: topic and payload. The
 payload contains a JSON document that you can import using JSON import mappings. The format of this message depends on
 the data send by the device.
@@ -111,6 +116,10 @@ This connector is licensed under the Apache v2 license.
 * 0.9.3 - 2016-08-25 - Bug fixes
   * Fixed MQTT topic with $ sign subscriptions
 
+* 5.0.0 - 2021-03-02 - Subscribe with client id
+  * New microflow activity to subscribe with a client id
+  * Upgrade to Mendix 7.23.19
+
  [1]: docs/images/list-things-mf.png
  [2]: docs/images/list-things-conf.png
  [3]: https://aws.amazon.com/iot/
@@ -127,3 +136,4 @@ This connector is licensed under the Apache v2 license.
  [14]: http://www.javaquery.com/2016/01/aws-version-4-signing-process-complete.html
  [15]: https://github.com/mendix/MxAwsIotConnector
  [16]: docs/images/mx-aws-iot-toolbox.png
+ [17]: docs/images/subscribe-with-clientid.png
