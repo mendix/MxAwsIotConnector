@@ -37,15 +37,23 @@ public class MqttConnector {
         }
     }
 
+    public void startListening(String brokerHost, Long brokerPort, String clientId) throws Exception {
+        logger.info("MqttConnector.subscribe");
+        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null, clientId, null);
+        connection.startListening();
+    }
+
     public void subscribe(String brokerHost, Long brokerPort, String topicName, String onMessageMicroflow, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
         logger.info("MqttConnector.subscribe");
         subscribe(brokerHost, brokerPort, topicName, onMessageMicroflow, CA, ClientCertificate, ClientKey, CertificatePassword, UUID.randomUUID().toString(), true);
     }
+
     public void subscribe(String brokerHost, Long brokerPort, String topicName, String onMessageMicroflow, String CA, String ClientCertificate, String ClientKey, String CertificatePassword, String clientId, Boolean startWithCleanSession) throws Exception {
         logger.info("MqttConnector.subscribe");
         MqttConnection connection = getMqttConnection(brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword, clientId, startWithCleanSession);
         connection.subscribe(topicName, onMessageMicroflow);
     }
+
     public void publish(String brokerHost, Long brokerPort, String topicName, String message, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
         logger.info("MqttConnector.publish");
         MqttConnection connection = getMqttConnection(brokerHost, brokerPort, CA, ClientCertificate, ClientKey, CertificatePassword, null, false);
@@ -79,35 +87,38 @@ public class MqttConnector {
     }
 
     public void unsubscribe(String brokerHost, Long brokerPort, String topicName) throws Exception {
-        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null,null,true);
+        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null, null, true);
         connection.unsubscribe(topicName);
     }
 
 
     private class MqttConnection {
         private ILogNode logger;
-        private MqttClient client;
+        private MqttClient client = null;
         private HashMap<String, MqttSubscription> subscriptions = new HashMap<>();
+        private String broker = null;
+        private MqttConnectOptions options = null;
+        private String clientId = null;
+        private MemoryPersistence persistence = null;
 
         public MqttConnection(ILogNode logger, String brokerHost, Long brokerPort, String CA, String ClientCertificate, String ClientKey, String CertificatePassword, String clientId, Boolean startWithCleanSession) throws Exception {
             logger.info("new MqttConnection");
             this.logger = logger;
-            //String clientId = "JavaSample";
             String hostname = InetAddress.getLocalHost().getHostName();
             String xasId = Core.getXASId();
-            //String clientId = UUID.randomUUID().toString();
-            logger.info("new MqttConnection client id " + clientId);
+            logger.info("new MqttConnection client id " + clientId + ", clean Session: " + startWithCleanSession);
 
             boolean useSsl = (ClientCertificate != null && !ClientCertificate.equals(""));
-            String broker = String.format("tcp://%s:%d", brokerHost, brokerPort);
+            broker = null;
             MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setCleanSession(true);
-            if (useSsl) {
+            connOpts.setCleanSession(startWithCleanSession);
+            connOpts.setConnectionTimeout(60);
+            connOpts.setKeepAliveInterval(0);
+
+            if (!useSsl) {
+                broker = String.format("tcp://%s:%d", brokerHost, brokerPort);
+            } else {
                 broker = String.format("ssl://%s:%d", brokerHost, brokerPort);
-                connOpts = new MqttConnectOptions();
-                connOpts.setConnectionTimeout(60);
-                connOpts.setKeepAliveInterval(0);
-                connOpts.setCleanSession(startWithCleanSession);
                 try {
                     String resourcesPath = null;
                     try {
@@ -130,14 +141,38 @@ public class MqttConnector {
                     throw e;
                 }
             }
-            MemoryPersistence persistence = new MemoryPersistence();
+            this.options = connOpts;
+            this.clientId = clientId;
+            // memory for keeping messages that cannot be published yet
+            this.persistence = new MemoryPersistence();
+            //startListening();
+        }
 
+        public void startListening() throws Exception {
+            logger.info("startListening");
             try {
-                this.client = new MqttClient(broker, clientId, persistence);
+                this.client = new MqttClient(this.broker, this.clientId, this.persistence);
                 logger.info("Connecting to broker: " + broker);
-                client.connect(connOpts);
                 client.setCallback(new MxMqttCallback(logger, client, subscriptions));
+                client.connect(this.options);
+                this.subscriptions.forEach((s, mqttSubscription) -> {
+                    try {
+                        client.subscribe(s);
+                    } catch (Exception e) {
+                        logger.error(e);
+                    }
+                });
                 logger.info("Connected");
+            } catch (Exception e) {
+                logger.error(e);
+                throw e;
+            }
+        }
+
+        public void stopListening() throws Exception {
+            logger.info("stopListening");
+            try {
+                this.client.disconnect();
             } catch (Exception e) {
                 logger.error(e);
                 throw e;
@@ -154,9 +189,11 @@ public class MqttConnector {
         }
 
         public void subscribe(String topic, String onMessageMicroflow) throws MqttException {
-            logger.info(String.format("MqttConnection.subscribe: %s", client.getClientId()));
+            logger.info("MqttConnection.subscribe");
             try {
-                client.subscribe(topic);
+                if (client != null) {
+                    client.subscribe(topic);
+                }
                 subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
             } catch (Exception e) {
                 logger.error(e);
