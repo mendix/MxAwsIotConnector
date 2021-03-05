@@ -2,10 +2,7 @@ package mxawsiot.impl;
 
 import com.mendix.core.Core;
 import com.mendix.logging.ILogNode;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.File;
@@ -153,8 +150,9 @@ public class MqttConnector {
             try {
                 this.client = new MqttClient(this.broker, this.clientId, this.persistence);
                 logger.info("Connecting to broker: " + broker);
-                client.setCallback(new MxMqttCallback(logger, client, subscriptions));
-                client.connect(this.options);
+                client.setCallback(new MxMqttCallback(logger, client, subscriptions, options));
+                IMqttToken token = client.connectWithResult(this.options);
+                token.waitForCompletion();
                 this.subscriptions.forEach((s, mqttSubscription) -> {
                     try {
                         client.subscribe(s);
@@ -192,9 +190,14 @@ public class MqttConnector {
             logger.info("MqttConnection.subscribe");
             try {
                 if (client != null) {
+                    if (!client.isConnected()){
+                        logger.warn("reconnecting...");
+                        IMqttToken token = client.connectWithResult(this.options);
+                        token.waitForCompletion();
+                    }
                     client.subscribe(topic);
+                    subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
                 }
-                subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
             } catch (Exception e) {
                 logger.error(e);
                 throw e;
@@ -209,9 +212,17 @@ public class MqttConnector {
                 //int qos = 1;
                 int qos = 0;
                 payload.setQos(qos);
-                logger.info("Message publishing");
-                client.publish(topic, payload);
-                logger.info("Message published");
+                if (client != null) {
+                    if (!client.isConnected()) {
+                        logger.warn("reconnecting...");
+                        IMqttToken token = client.connectWithResult(this.options);
+                        token.waitForCompletion();
+                    }
+                    logger.info("Message publishing");
+                    client.publish(topic, payload);
+                    logger.info("Message published");
+                }
+
             } catch (Exception e) {
                 logger.error(String.format("mqtt publish failed: %s", e.getMessage()));
                 logger.error(e);
@@ -222,7 +233,14 @@ public class MqttConnector {
         public void unsubscribe(String topicName) throws MqttException {
             logger.info(String.format("unsubscribe: %s, %s", topicName, client.getClientId()));
             try {
-                client.unsubscribe(topicName);
+                if (client != null) {
+                    if (!client.isConnected()) {
+                        logger.warn("reconnecting...");
+                        IMqttToken token = client.connectWithResult(this.options);
+                        token.waitForCompletion();
+                    }
+                    client.unsubscribe(topicName);
+                }
             } catch (MqttException e) {
                 logger.error(e);
                 throw e;

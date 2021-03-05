@@ -19,22 +19,43 @@ public class MxMqttCallback implements MqttCallback {
     private ILogNode logger = null;
     private MqttClient client = null;
     private HashMap<String, MqttSubscription> subscriptions = null;
+    private MqttConnectOptions options = null;
+    private int RETRIES = 10;
 
-    public MxMqttCallback(ILogNode logger, MqttClient client, HashMap<String, MqttSubscription> subscriptions) {
+    public MxMqttCallback(ILogNode logger, MqttClient client, HashMap<String, MqttSubscription> subscriptions, MqttConnectOptions options) {
         this.logger = logger;
         this.client = client;
         this.subscriptions = subscriptions;
+        this.options = options;
     }
 
     @Override
     public void connectionLost(Throwable throwable) {
         logger.info(String.format("connectionLost: %s, %s", throwable.getMessage(), client.getClientId()));
         logger.warn(throwable);
-        try {
-            client.connect();
-        } catch (MqttException e) {
-            logger.error(e);
+        int retries = RETRIES;
+        while(retries > 0) {
+            try {
+                logger.warn("retrying connection...");
+                IMqttToken token = client.connectWithResult(options);
+                token.waitForCompletion();
+                if (client.isConnected()){
+                    logger.warn("connection re-established");
+                    break;
+                }else {
+                    retries--;
+                    waitUntilNextTry();
+                }
+
+            } catch (MqttException e) {
+                logger.error("retry failed. waiting before retry...");
+                retries--;
+                waitUntilNextTry();
+            }
         }
+        if (!client.isConnected())
+            logger.error("connection retry failed. quitting...");
+
     }
 
     @Override
@@ -83,5 +104,13 @@ public class MxMqttCallback implements MqttCallback {
     @Override
     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
         logger.info(String.format("deliveryComplete: %s", client.getClientId()));
+    }
+
+    private void waitUntilNextTry()
+    {
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException iex) { }
     }
 }
