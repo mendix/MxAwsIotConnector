@@ -2,10 +2,7 @@ package mxawsiot.impl;
 
 import com.mendix.core.Core;
 import com.mendix.logging.ILogNode;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.File;
@@ -154,7 +151,8 @@ public class MqttConnector {
                 this.client = new MqttClient(this.broker, this.clientId, this.persistence);
                 logger.info("Connecting to broker: " + broker);
                 client.setCallback(new MxMqttCallback(logger, client, subscriptions, options));
-                client.connect(this.options);
+                IMqttToken token = client.connectWithResult(this.options);
+                token.waitForCompletion();
                 this.subscriptions.forEach((s, mqttSubscription) -> {
                     try {
                         client.subscribe(s);
