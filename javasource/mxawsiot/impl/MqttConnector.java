@@ -153,7 +153,7 @@ public class MqttConnector {
             try {
                 this.client = new MqttClient(this.broker, this.clientId, this.persistence);
                 logger.info("Connecting to broker: " + broker);
-                client.setCallback(new MxMqttCallback(logger, client, subscriptions));
+                client.setCallback(new MxMqttCallback(logger, client, subscriptions, options));
                 client.connect(this.options);
                 this.subscriptions.forEach((s, mqttSubscription) -> {
                     try {

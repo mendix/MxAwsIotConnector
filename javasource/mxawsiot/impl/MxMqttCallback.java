@@ -19,11 +19,13 @@ public class MxMqttCallback implements MqttCallback {
     private ILogNode logger = null;
     private MqttClient client = null;
     private HashMap<String, MqttSubscription> subscriptions = null;
+    private MqttConnectOptions options = null;
 
-    public MxMqttCallback(ILogNode logger, MqttClient client, HashMap<String, MqttSubscription> subscriptions) {
+    public MxMqttCallback(ILogNode logger, MqttClient client, HashMap<String, MqttSubscription> subscriptions, MqttConnectOptions options) {
         this.logger = logger;
         this.client = client;
         this.subscriptions = subscriptions;
+        this.options = options;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class MxMqttCallback implements MqttCallback {
         logger.info(String.format("connectionLost: %s, %s", throwable.getMessage(), client.getClientId()));
         logger.warn(throwable);
         try {
-            client.connect();
+            client.connect(options);
         } catch (MqttException e) {
             logger.error(e);
         }
