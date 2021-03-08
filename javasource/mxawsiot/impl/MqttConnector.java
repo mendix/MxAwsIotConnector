@@ -189,6 +189,7 @@ public class MqttConnector {
         public void subscribe(String topic, String onMessageMicroflow) throws MqttException {
             logger.info("MqttConnection.subscribe");
             try {
+                subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
                 if (client != null) {
                     if (!client.isConnected()){
                         logger.warn("reconnecting...");
@@ -196,7 +197,6 @@ public class MqttConnector {
                         token.waitForCompletion();
                     }
                     client.subscribe(topic);
-                    subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
                 }
             } catch (Exception e) {
                 logger.error(e);
