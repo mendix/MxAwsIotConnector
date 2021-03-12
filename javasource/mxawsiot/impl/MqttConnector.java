@@ -148,11 +148,13 @@ public class MqttConnector {
         public void startListening() throws Exception {
             logger.info("startListening");
             try {
-                this.client = new MqttClient(this.broker, this.clientId, this.persistence);
-                logger.info("Connecting to broker: " + broker);
+                this.client = this.client != null? this.client : new MqttClient(this.broker, this.clientId, this.persistence);
                 client.setCallback(new MxMqttCallback(logger, client, subscriptions, options));
-                IMqttToken token = client.connectWithResult(this.options);
-                token.waitForCompletion();
+                if (!client.isConnected()){
+                    logger.info("Connecting to broker: " + broker);
+                    IMqttToken token = client.connectWithResult(this.options);
+                    token.waitForCompletion();
+                }
                 this.subscriptions.forEach((s, mqttSubscription) -> {
                     try {
                         client.subscribe(s);
@@ -192,7 +194,7 @@ public class MqttConnector {
                 subscriptions.put(topic, new MqttSubscription(topic, onMessageMicroflow));
                 if (client != null) {
                     if (!client.isConnected()){
-                        logger.warn("reconnecting...");
+                        logger.info("reconnecting...");
                         IMqttToken token = client.connectWithResult(this.options);
                         token.waitForCompletion();
                     }
@@ -214,7 +216,7 @@ public class MqttConnector {
                 payload.setQos(qos);
                 if (client != null) {
                     if (!client.isConnected()) {
-                        logger.warn("reconnecting...");
+                        logger.info("reconnecting...");
                         IMqttToken token = client.connectWithResult(this.options);
                         token.waitForCompletion();
                     }
@@ -235,7 +237,7 @@ public class MqttConnector {
             try {
                 if (client != null) {
                     if (!client.isConnected()) {
-                        logger.warn("reconnecting...");
+                        logger.info("reconnecting...");
                         IMqttToken token = client.connectWithResult(this.options);
                         token.waitForCompletion();
                     }
