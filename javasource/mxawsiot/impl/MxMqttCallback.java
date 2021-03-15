@@ -36,11 +36,11 @@ public class MxMqttCallback implements MqttCallback {
         int retries = RETRIES;
         while(retries > 0) {
             try {
-                logger.warn("retrying connection...");
+                logger.info("retrying connection...");
                 IMqttToken token = client.connectWithResult(options);
                 token.waitForCompletion();
                 if (client.isConnected()){
-                    logger.warn("connection re-established");
+                    logger.info("connection re-established");
                     break;
                 }else {
                     retries--;
