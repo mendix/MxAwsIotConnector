@@ -35,9 +35,14 @@ public class MqttConnector {
     }
 
     public void startListening(String brokerHost, Long brokerPort, String clientId) throws Exception {
-        logger.info("MqttConnector.subscribe");
-        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null, clientId, null);
-        connection.startListening();
+        logger.info("MqttConnector.start listening");
+        String key = brokerHost + ":" + brokerPort;
+        MqttConnection handler = mqttHandlers.containsKey(key) ? mqttHandlers.get(key) : null ;
+        if (handler != null)
+            handler.startListening();
+        else {
+            logger.info("no active subscription with this broker, no need to start listening");
+        }
     }
 
     public void subscribe(String brokerHost, Long brokerPort, String topicName, String onMessageMicroflow, String CA, String ClientCertificate, String ClientKey, String CertificatePassword) throws Exception {
@@ -76,6 +81,7 @@ public class MqttConnector {
             } else {
                 logger.info("Found existing MqttConnection");
                 handler = mqttHandlers.get(key);
+
             }
             logger.info("Number of objects in mqttHandlers map: " + mqttHandlers.size());
         }
@@ -84,8 +90,13 @@ public class MqttConnector {
     }
 
     public void unsubscribe(String brokerHost, Long brokerPort, String topicName) throws Exception {
-        MqttConnection connection = getMqttConnection(brokerHost, brokerPort, null, null, null, null, null, true);
-        connection.unsubscribe(topicName);
+        String key = brokerHost + ":" + brokerPort;
+        MqttConnection handler = mqttHandlers.containsKey(key) ? mqttHandlers.get(key) : null ;
+        if (handler != null)
+            handler.unsubscribe(topicName);
+        else {
+            logger.info("no active subscription with this broker, unsubscription has no effect");
+        }
     }
 
 
@@ -233,8 +244,9 @@ public class MqttConnector {
         }
 
         public void unsubscribe(String topicName) throws MqttException {
-            logger.info(String.format("unsubscribe: %s, %s", topicName, client.getClientId()));
+            logger.info(String.format("unsubscribe: %s", topicName));
             try {
+                subscriptions.remove(topicName);
                 if (client != null) {
                     if (!client.isConnected()) {
                         logger.info("reconnecting...");
